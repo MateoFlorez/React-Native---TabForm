@@ -5,37 +5,62 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from 'react';
 
 function UserScreen({ navigation }) {
-  const [fullname, setFullname] = useState('');
-  const [email, setEmail] = useState('');
+  const [user, setUser] = useState('');
+  const [rol, setRol] = useState('');
+  const [password, setPassword] = useState('');
+  const users =[
+    {
+      user: "Mateo",
+      rol: "Administrador",
+      password: "123456"
+    },
+    {
+      user: "Rachel",
+      rol: "Usuario",
+      password: "123456"
+    }
+    
+  ]
 
   const validate = () => {
-    if (email == "tv@gmail.com") {
-      setEmail("");
-      setFullname("")
-      navigation.navigate('Profile', { fullname: fullname })
+    if (rol == "Administrador") {
+      setRol("");
+      setUser("");
+      setPassword("")
+      navigation.navigate('Profile', { user: user })
     }
   }
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <TextInput
         style={styles.inputs}
-        onChangeText={value => setFullname(value)}
-        value={fullname}
+        onChangeText={value => setUser(value)}
+        value={user}
+        placeholder="User"
       />
       <TextInput
         style={styles.inputs}
-        onChangeText={value => setEmail(value)}
-        value={email}
+        onChangeText={value => setRol(value)}
+        value={rol}
+        placeholder="Rol"
+      />
+      <TextInput
+        style={styles.inputs}
+        onChangeText={value => setPassword(value)}
+        value={password}
+        placeholder="Password"
+        secureTextEntry={true}
       />
       <Button
-        title="Perfil del Usuario"
+        title="Ingresar"
         //onPress={() => navigation.navigate('Settings')}
         //onPress={validate}
         onPress={() => {
-          if (email == "tv@gmail.com") {
-            setEmail("");
-            setFullname("")
-            navigation.navigate('Profile', { fullname: fullname })
+          if (rol == "Administrador" && user.value == users.user && password.value == users.password) {
+            setRol("");
+            setUser("");
+            setPassword("")
+            navigation.navigate('Profile', { user: user })
           }
         }}
 
@@ -47,7 +72,7 @@ function UserScreen({ navigation }) {
 function ProfileScreen({ route }) {
   return (
     <View style={styles.container}>
-      <Text>Perfil: {route.params.fullname}</Text>
+      <Text>Perfil: {route.params.user}</Text>
     </View>
   );
 }
