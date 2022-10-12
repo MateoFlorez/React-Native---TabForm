@@ -4,23 +4,28 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from 'react';
 
+const users = [
+  {
+    user: "Mateo",
+    rol: "Administrador",
+    password: "123456"
+  },
+  {
+    user: "Rachel",
+    rol: "Usuario",
+    password: "123456"
+  }
+  
+]
+
+const findUser = users.find(user => user)
+const findRol = users.find(rol => rol)
+const findPassword = users.find(password => password)
+
 function UserScreen({ navigation }) {
   const [user, setUser] = useState('');
   const [rol, setRol] = useState('');
   const [password, setPassword] = useState('');
-  const users =[
-    {
-      user: "Mateo",
-      rol: "Administrador",
-      password: "123456"
-    },
-    {
-      user: "Rachel",
-      rol: "Usuario",
-      password: "123456"
-    }
-    
-  ]
 
   const validate = () => {
     if (rol == "Administrador") {
@@ -56,11 +61,14 @@ function UserScreen({ navigation }) {
         //onPress={() => navigation.navigate('Settings')}
         //onPress={validate}
         onPress={() => {
-          if (rol == "Administrador" && user.value == users.user && password.value == users.password) {
+          if (rol === "Administrador" && user.value === users.user && password.value === users.password) {
             setRol("");
             setUser("");
             setPassword("")
             navigation.navigate('Profile', { user: user })
+          }
+          else{
+            alert("Usuario no registrado")
           }
         }}
 
